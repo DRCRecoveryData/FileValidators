@@ -13,19 +13,17 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 # coding=utf-8
-from abc import ABCMeta
+from abc import ABC, abstractmethod
 
-
-class Validator(object):
+class Validator(ABC):
     """
     Abstract class that defines the Validator Interface.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self):
         """
-        Setting the behaviour for most validators. All validators are expected to have is_valid,
-        eof, and bytes_last_valid attributes. Some methods rely on this variables.
+        Setting the behavior for most validators. All validators are expected to have is_valid,
+        eof, and bytes_last_valid attributes. Some methods rely on these variables.
 
         :var is_valid: tells if the last file that was validated was valid. (bool)
         :var eof: tells if the validator reached EOF in the last file that was validated. (bool)
@@ -40,8 +38,7 @@ class Validator(object):
     def GetDetails(self):
         """
         Returns a dictionary with detailed validator-specific information about the last validated
-        file. Its a mean to provide a single interface to get more information, which is format
-        specific.
+        file. It provides a single interface to get more information, which is format-specific.
 
         :return: a dictionary of objects
         """
@@ -59,13 +56,14 @@ class Validator(object):
         """
         return self.is_valid, self.eof, self.bytes_last_valid, self.end
             
+    @abstractmethod
     def Validate(self, fd):
         """
         Validates a file-like object. Returns True or False. Further information can be obtained
         through GetStatus() or GetDetails().
 
-        :param fd: a file-like object -- must support file methods: read, seek, tell, etc. Also,
-            if its a file, it must be opened for binary reads.
+        :param fd: a file-like object -- must support file methods: read, seek, tell, etc.
+                   If it is a file, it must be opened for binary reads.
         :return: True on a valid file, False otherwise.
         """
         pass
@@ -84,7 +82,6 @@ class Validator(object):
         """
         if self.is_valid and not self.eof:
             self.bytes_last_valid += bytes_read
-            #print self.bytes_last_valid,
 
     def _SetValidBytes(self, value):
         """
