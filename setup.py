@@ -13,14 +13,14 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
 
 # coding=utf-8
-from distutils.core import setup
+from setuptools import setup
 import FileValidators
 
-long_desc = """"
+long_desc = """
 A file validation framework based on Garfinkel's work described in "Carving contiguous and
 fragmented files with fast object validation", 2007.
 
-Some validators have drawn upon ideas found on Garfinkel's work, while others are entirely new. The
+Some validators have drawn upon ideas found in Garfinkel's work, while others are entirely new. The
 interface provided is similar to that which Garfinkel proposed, but there are some differences.
 
 Currently supported formats:
@@ -32,14 +32,18 @@ Currently supported formats:
 """
 
 setup(
-    name = "CIRA File Validation Framework",
-    version = FileValidators.__VER__,
-    description = "File validation framework for file carving applications.",
-    long_description = long_desc,
-    author = "InFo-Lab",
-    #author_email = "info-lab@ufasta.edu.ar", this still isn't active, should be pretty soon
-    url = "http://ciraframework.wordpress.com/",
-    #url = "http://www.info-lab.org.ar/"
-    packages = ['FileValidators'],
-    
-    )
+    name="CIRA File Validation Framework",
+    version=getattr(FileValidators, "__VER__", "0.1.0"),  # Default to 0.1.0 if __VER__ is missing
+    description="File validation framework for file carving applications.",
+    long_description=long_desc,
+    long_description_content_type="text/plain",
+    author="InFo-Lab",
+    url="http://ciraframework.wordpress.com/",
+    packages=["FileValidators"],
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    python_requires=">=3.6",
+)
