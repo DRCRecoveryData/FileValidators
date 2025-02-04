@@ -1,4 +1,5 @@
 # coding=utf-8
+from CR2Validator import CR2Validator
 from EMLValidator import EMLValidator
 from GIFValidator import GIFValidator
 from JPGValidator import JPGValidator
